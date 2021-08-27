@@ -1,0 +1,16 @@
+tim.c:24:6:GetColorValues	16	static
+tim.c:30:6:SetColorValues	16	static
+tim.c:36:10:GetLuminanceValue	4	static
+tim.c:40:6:SetLuminanceValue	16	static
+tim.c:45:10:GetRateValue	4	static
+tim.c:49:6:SetRateValue	16	static
+tim.c:55:6:ProcessLuminance	4	static
+tim.c:75:6:HAL_TIM_PeriodElapsedCallback	16	static
+tim.c:88:6:MX_TIM3_Init	48	static
+tim.c:132:6:MX_TIM4_Init	48	static
+tim.c:184:6:MX_TIM7_Init	16	static
+tim.c:217:6:HAL_TIM_PWM_MspInit	24	static
+tim.c:244:6:HAL_TIM_Base_MspInit	24	static
+tim.c:263:6:HAL_TIM_MspPostInit	48	static
+tim.c:313:6:HAL_TIM_PWM_MspDeInit	16	static
+tim.c:340:6:HAL_TIM_Base_MspDeInit	16	static
