@@ -1,5 +1,5 @@
-#ifndef __serial_shell_H
-#define __serial_shell_H
+#ifndef __SERIAL_SHELL_H
+#define __SERIAL_SHELL_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -14,6 +14,8 @@ void ProcessSerial(uint8_t* Buf);
 void SerialCommands(uint8_t* input, uint8_t in_len);
 
 uint16_t ParseNumber(uint8_t* input, uint8_t* i, uint8_t* error);
+
+uint16_t NumberLen(uint16_t num);
 
 void ValueError(void);
 

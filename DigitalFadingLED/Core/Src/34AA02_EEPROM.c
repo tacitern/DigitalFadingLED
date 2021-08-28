@@ -80,7 +80,9 @@ void eepromReady(uint8_t dev_address){
   while(HAL_I2C_IsDeviceReady(&hi2c1, dev, 1, HAL_MAX_DELAY) == HAL_BUSY){
       HAL_Delay(1);
   }
+}
 
-//  HAL_Delay(5);
+void setDeviceId(uint8_t id){
+
 }
 

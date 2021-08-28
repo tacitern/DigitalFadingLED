@@ -16,6 +16,7 @@ extern "C" {
 #include "main.h"
 #include "i2c.h"
 
+#define EEPROMADDRESS  0  // EEPROM I2C Device Address
 
 typedef enum
 {
@@ -27,7 +28,6 @@ typedef enum
   LUM_LOW	= 0x05U,
   RATE		= 0x06U
 }EEPROM_MemTypeDef;
-
 
 uint8_t eepromRead(EEPROM_MemTypeDef address, uint8_t dev_address);
 

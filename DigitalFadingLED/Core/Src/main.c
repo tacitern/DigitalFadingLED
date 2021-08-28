@@ -114,7 +114,7 @@ int main(void)
 
   //Get Saved state from EEPROM
   uint16_t buf[6] = {0};
-  readSavedData(buf, 0);
+  readSavedData(buf, EEPROMADDRESS);
 
   //setID(buf[0])
   uint8_t startcolors[3] = {(uint8_t)buf[1], (uint8_t)buf[2], (uint8_t)buf[3]};

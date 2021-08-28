@@ -29,25 +29,18 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 
 	  GetColorValues(colors);
 
-      sprintf((char*)serial_out, "Red %i; Green %i; Blue %i\n\r",
-				  colors[0], colors[1], colors[2]);
+    sprintf((char*)serial_out, "Red %i; Green %i; Blue %i;\n\r",
+        colors[0], colors[1], colors[2]);
 
-      len_out += 21;
+    len_out += 22;
 
-      for(uint8_t i = 0; i < 3; i++){
-    	  if(colors[i] >= 100){
-    		  len_out += 3;
-    	  }
-    	  else if(colors[i] >= 10){
-    		  len_out += 2;
-    	  }
-    	  else{
-    		  len_out++;
-    	  }
-      }
+    for(uint8_t i = 0; i < 3; i++){
+      
+      len_out += NumberLen(colors[i]);
+    }
 
-      SendSerial(serial_out, len_out);
-  }
+    SendSerial(serial_out, len_out);
+}
 
   else if(strncmp((char*)input, "COLOR", 5U) == 0){
     i = 6;
@@ -56,48 +49,39 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 
     for(uint8_t j = 0; j < sizeof(colors); j++){
 
-	colors[j] = (uint8_t)ParseNumber(input, &i, &error_flag);
+    	colors[j] = (uint8_t)ParseNumber(input, &i, &error_flag);
 
-	// limit colors to 8 bit
-	if(colors[j] > 255){
-	    colors[j] = 255;
-	}
+    	// limit colors to 8 bit
+    	if(colors[j] > 255){
+    		colors[j] = 255;
+    	}
 
-	if(input[i] == '\r' || input[i] == '\n'){
-	    break;
-	}
+    	if(input[i] == '\r' || input[i] == '\n'){
+    		break;
+    	}
 
-	i++;
+    	i++;
 
     }
     if(error_flag){
-	ValueError();
+	    ValueError();
     }
     else{
-	SetColorValues(colors);
+	    SetColorValues(colors);
     }
   }
+
   else if(strncmp((char*)input, "LUM?", 4U) == 0){
       uint8_t len_out = 0;
 
       uint16_t val = GetLuminanceValue();
 
-      if(val >= 1000){
-	  len_out += 4;
-      }
-      else if(val >= 100){
-	  len_out += 3;
-      }
-      else if(val >= 10){
-	  len_out += 2;
-      }
-      else{
-	  len_out += 1;
-      }
+      len_out += NumberLen(val);
 
       sprintf((char*)serial_out, "%i\n\r", val);
       SendSerial(serial_out, len_out + 2);
   }
+
   else if(strncmp((char*)input, "LUM", 3U) == 0){
     i = 4;
 
@@ -112,30 +96,21 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
     	ValueError();
     }
     else{
-	SetLuminanceValue(val);
+	    SetLuminanceValue(val);
     }
   }
+
   else if(strncmp((char*)input, "RATE?", 5U) == 0){
       uint8_t len_out = 0;
 
       uint16_t val = GetRateValue();
 
-      if(val >= 1000){
-      	  len_out += 4;
-      }
-      else if(val >= 100){
-      	  len_out += 3;
-      }
-      else if(val >= 10){
-      	  len_out += 2;
-      }
-      else{
-      	  len_out += 1;
-      }
+      len_out += NumberLen(val);
 
       sprintf((char*)serial_out, "%i\n\r", val);
       SendSerial(serial_out, len_out + 2);
   }
+  
   else if(strncmp((char*)input, "RATE", 4U) == 0){
     i = 5;
 
@@ -143,23 +118,35 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 
     // limit rate to 1000
     if(val > 1000){
-	val = 1000;
+    	val = 1000;
     }
 
     if(error_flag){
-	ValueError();
+	    ValueError();
     }
     else{
-	SetRateValue(val);
+	    SetRateValue(val);
     }
   }
   //TODO
 //  else if(strncmp((char*)input, "SAVE?", 5U) == 0){
-////      readSavedValues();
+//     uint8_t buf[]
+//     readSavedValues();
 //  }
 //  else if(strncmp((char*)input, "SAVE", 4U) == 0){
 //
 //  }
+  else if(strncmp((char*)input, "ID?", 3U) == 0){
+    uint8_t len_out = 0;
+
+    uint8_t val = eepromRead(ID, EEPROMADDRESS);
+
+    len_out += NumberLen(val);
+
+    sprintf((char*)serial_out, "%i\n\r", val);
+    SendSerial(serial_out, len_out + 2);
+  }
+
   else{
       sprintf((char*)serial_out, "Error: No Command\n\r");
       SendSerial(serial_out, 19);
@@ -187,6 +174,30 @@ uint16_t ParseNumber(uint8_t* input, uint8_t* i, uint8_t* error){
   }
 
   return val;
+}
+
+/**
+  *NumberLen
+  */
+uint16_t NumberLen(uint16_t num){
+    uint16_t len = 0;
+    if(num >= 10000){
+        len += 5;
+    }
+    else if(num >= 1000){
+        len += 4;
+    }
+    else if(num >= 100){
+        len += 3;
+    }
+    else if(num >= 10){
+        len += 2;
+    }
+    else if(num < 10){
+        len += 1;
+    }
+
+    return len;
 }
 
 void ValueError(void){
