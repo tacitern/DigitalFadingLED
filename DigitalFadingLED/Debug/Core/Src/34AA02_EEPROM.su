@@ -2,5 +2,5 @@
 34AA02_EEPROM.c:23:19:eepromWrite	32	static
 34AA02_EEPROM.c:36:6:readSavedData	24	static
 34AA02_EEPROM.c:61:6:setSavedData	16	static
-34AA02_EEPROM.c:78:6:eepromReady	24	static
-34AA02_EEPROM.c:85:6:setDeviceId	16	static
+34AA02_EEPROM.c:77:6:eepromReady	24	static
+34AA02_EEPROM.c:84:6:setDeviceId	16	static

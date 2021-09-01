@@ -58,20 +58,19 @@ void readSavedData(uint16_t *buf, uint8_t dev_address){
   eepromReady(dev_address);
 }
 
-void setSavedData(uint8_t dev_address){
-  eepromWrite(ID, 1, dev_address);
+void setSavedData(uint8_t dev_address, uint8_t* data){
+  
+  eepromWrite(RED, data[0], dev_address);
   HAL_Delay(5);
-  eepromWrite(RED, 186, dev_address);
+  eepromWrite(GREEN, data[1], dev_address);
   HAL_Delay(5);
-  eepromWrite(GREEN, 127, dev_address);
+  eepromWrite(BLUE, data[2], dev_address);
   HAL_Delay(5);
-  eepromWrite(BLUE, 24, dev_address);
+  eepromWrite(LUM_UP, data[3], dev_address);
   HAL_Delay(5);
-  eepromWrite(LUM_UP, 2, dev_address);
+  eepromWrite(LUM_LOW, data[4], dev_address);
   HAL_Delay(5);
-  eepromWrite(LUM_LOW, 128, dev_address);
-  HAL_Delay(5);
-  eepromWrite(RATE, 5, 0);
+  eepromWrite(RATE, data[5], 0);
   HAL_Delay(5);
 }
 

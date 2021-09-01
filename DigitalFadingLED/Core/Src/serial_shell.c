@@ -117,8 +117,8 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
     uint16_t val = ParseNumber(input, &i, &error_flag);
 
     // limit rate to 1000
-    if(val > 1000){
-    	val = 1000;
+    if(val > 255){
+    	val = 255;
     }
 
     if(error_flag){
@@ -146,9 +146,21 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
                                 buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
     SendSerial(serial_out, len_out);
  }
-//  else if(strncmp((char*)input, "SAVE", 4U) == 0){
 
-//  }
+ else if(strncmp((char*)input, "SAVE", 4U) == 0){
+    uint8_t data[6] = {0};
+
+    GetColorValues(data);
+
+    uint16_t lum = GetLuminanceValue();
+    data[3] = (uint8_t)((lum & 0x0300) >> 8);
+    data[4] = (uint8_t)(lum & 0x00FF);
+
+    data[5] = (uint8_t)GetRateValue();
+
+    setSavedData(EEPROMADDRESS, data);
+ }
+
   else if(strncmp((char*)input, "ID?", 3U) == 0){
     uint8_t len_out = 0;
 

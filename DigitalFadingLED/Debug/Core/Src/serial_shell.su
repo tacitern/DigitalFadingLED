@@ -1,7 +1,7 @@
 serial_shell.c:16:6:SendSerial	16	static
-serial_shell.c:20:6:SerialCommands	88	static
-serial_shell.c:169:10:ParseNumber	40	static
-serial_shell.c:195:10:NumberLen	24	static
-serial_shell.c:216:6:ValueError	8	static
-serial_shell.c:221:6:ProcessSerial	16	static
-serial_shell.c:231:6:CheckCommand	8	static
+serial_shell.c:20:6:SerialCommands	96	static
+serial_shell.c:181:10:ParseNumber	40	static
+serial_shell.c:207:10:NumberLen	24	static
+serial_shell.c:228:6:ValueError	8	static
+serial_shell.c:233:6:ProcessSerial	16	static
+serial_shell.c:243:6:CheckCommand	8	static

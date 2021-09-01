@@ -35,7 +35,7 @@ HAL_StatusTypeDef eepromWrite(uint8_t address, uint8_t data, uint8_t dev_address
 
 void readSavedData(uint16_t *buf, uint8_t dev_address);
 
-void setSavedData(uint8_t dev_address);
+void setSavedData(uint8_t dev_address, uint8_t* data);
 
 void eepromReady(uint8_t dev_address);
 
