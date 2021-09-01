@@ -5,8 +5,8 @@
 #include "tim.h"
 #include "34AA02_EEPROM.h"
 
-uint8_t serial_out[200] = {0};			// Serial ascii output character buffer
-uint8_t serial_in[200] = {0};			// Serial ascii input character buffer
+uint8_t serial_out[255] = {0};			// Serial ascii output character buffer
+uint8_t serial_in[255] = {0};			// Serial ascii input character buffer
 
 uint8_t len_in = 0;				// Serial in length
 uint8_t i_in = 0;				// Serial in index
@@ -128,13 +128,26 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 	    SetRateValue(val);
     }
   }
-  //TODO
-//  else if(strncmp((char*)input, "SAVE?", 5U) == 0){
-//     uint8_t buf[]
-//     readSavedValues();
-//  }
+  // TODO
+ else if(strncmp((char*)input, "SAVE?", 5U) == 0){
+    uint8_t len_out = 0;
+
+    uint16_t buf[6] = {0};
+    readSavedData(buf, EEPROMADDRESS);
+
+    for(uint8_t i = 0; i < sizeof(buf); i++){
+      len_out += NumberLen(buf[i]);
+    }
+
+    len_out += 40;
+    // len_out += 12;
+
+    sprintf((char*)serial_out, "ID: %i\nRED: %i\nGREEN: %i\nBLUE: %i\nLUM: %i\nRATE: %i\n\r",
+                                buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
+    SendSerial(serial_out, len_out);
+ }
 //  else if(strncmp((char*)input, "SAVE", 4U) == 0){
-//
+
 //  }
   else if(strncmp((char*)input, "ID?", 3U) == 0){
     uint8_t len_out = 0;

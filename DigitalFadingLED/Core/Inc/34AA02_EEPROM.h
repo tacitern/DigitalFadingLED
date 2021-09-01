@@ -20,8 +20,8 @@ extern "C" {
 
 typedef enum
 {
-  ID		= 0x00U,
-  RED		= 0x01U,
+  ID		  = 0x00U,
+  RED		  = 0x01U,
   GREEN		= 0x02U,
   BLUE		= 0x03U,
   LUM_UP	= 0x04U,
