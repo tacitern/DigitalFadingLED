@@ -116,7 +116,7 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 
     uint16_t val = ParseNumber(input, &i, &error_flag);
 
-    // limit rate to 1000
+    // limit rate to 8 bits
     if(val > 255){
     	val = 255;
     }
@@ -128,7 +128,7 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 	    SetRateValue(val);
     }
   }
-  // TODO
+
  else if(strncmp((char*)input, "SAVE?", 5U) == 0){
     uint8_t len_out = 0;
 
@@ -170,6 +170,25 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 
     sprintf((char*)serial_out, "%i\n\r", val);
     SendSerial(serial_out, len_out + 2);
+  }
+
+  else if(strncmp((char*)input, "ID", 2U) == 0){
+    i = 3;
+
+    uint16_t val = ParseNumber(input, &i, &error_flag);
+
+    // limit ID to 8 bits
+    if(val > 255){
+    	val = 255;
+    }
+
+    if(error_flag){
+	    ValueError();
+    }
+    else{
+	    eepromWrite(ID, (uint8_t)val, EEPROMADDRESS);
+      HAL_Delay(5);
+    }
   }
 
   else{
