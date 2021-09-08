@@ -55,16 +55,16 @@ uint8_t dir = 0;
 void ProcessLuminance(void){
   if(time_flag){
     if(dir == 0){
-	htim3.Instance->CCR1 = htim3.Instance->CCR1 + rate;
+      htim3.Instance->CCR1 = htim3.Instance->CCR1 + rate;
     }
     else{
-	htim3.Instance->CCR1 = htim3.Instance->CCR1 - rate;
+      htim3.Instance->CCR1 = htim3.Instance->CCR1 - rate;
     }
     if(dir == 0 && htim3.Instance->CCR1 > 1000){
-	dir = 1;
+      dir = 1;
     }
     else if(dir == 1 && htim3.Instance->CCR1 < rate){
-	dir = 0;
+      dir = 0;
     }
 
     time_flag = 0;
@@ -75,7 +75,7 @@ void ProcessLuminance(void){
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
   if (htim == &htim7){
-      time_flag = 1;
+    time_flag = 1;
   }
 }
 /* USER CODE END 0 */

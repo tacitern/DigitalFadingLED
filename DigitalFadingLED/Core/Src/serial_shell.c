@@ -22,12 +22,17 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 
   uint8_t error_flag = 0; // Indicates Value errors
 
+  //Check for EEPROM Errors
+  if(getStatusLogLen){
+    EEPROMError();
+  }
+
   if(strncmp((char*)input, "COLOR?", 6U) == 0){
-	  uint8_t colors[3] = {0, 0, 0};
+    uint8_t colors[3] = {0, 0, 0};
 
-	  uint8_t len_out = 0;
+    uint8_t len_out = 0;
 
-	  GetColorValues(colors);
+    GetColorValues(colors);
 
     sprintf((char*)serial_out, "Red %i; Green %i; Blue %i;\n\r",
         colors[0], colors[1], colors[2]);
@@ -49,37 +54,37 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
 
     for(uint8_t j = 0; j < sizeof(colors); j++){
 
-    	colors[j] = (uint8_t)ParseNumber(input, &i, &error_flag);
+      colors[j] = (uint8_t)ParseNumber(input, &i, &error_flag);
 
-    	// limit colors to 8 bit
-    	if(colors[j] > 255){
-    		colors[j] = 255;
-    	}
+      // limit colors to 8 bit
+      if(colors[j] > 255){
+	      colors[j] = 255;
+      }
 
-    	if(input[i] == '\r' || input[i] == '\n'){
-    		break;
-    	}
+      if(input[i] == '\r' || input[i] == '\n'){
+	      break;
+      }
 
-    	i++;
+      i++;
 
     }
     if(error_flag){
-	    ValueError();
+      ValueError();
     }
     else{
-	    SetColorValues(colors);
+      SetColorValues(colors);
     }
   }
 
   else if(strncmp((char*)input, "LUM?", 4U) == 0){
-      uint8_t len_out = 0;
+    uint8_t len_out = 0;
 
-      uint16_t val = GetLuminanceValue();
+    uint16_t val = GetLuminanceValue();
 
-      len_out += NumberLen(val);
+    len_out += NumberLen(val);
 
-      sprintf((char*)serial_out, "%i\n\r", val);
-      SendSerial(serial_out, len_out + 2);
+    sprintf((char*)serial_out, "%i\n\r", val);
+    SendSerial(serial_out, len_out + 2);
   }
 
   else if(strncmp((char*)input, "LUM", 3U) == 0){
@@ -101,14 +106,14 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
   }
 
   else if(strncmp((char*)input, "RATE?", 5U) == 0){
-      uint8_t len_out = 0;
+    uint8_t len_out = 0;
 
-      uint16_t val = GetRateValue();
+    uint16_t val = GetRateValue();
 
-      len_out += NumberLen(val);
+    len_out += NumberLen(val);
 
-      sprintf((char*)serial_out, "%i\n\r", val);
-      SendSerial(serial_out, len_out + 2);
+    sprintf((char*)serial_out, "%i\n\r", val);
+    SendSerial(serial_out, len_out + 2);
   }
   
   else if(strncmp((char*)input, "RATE", 4U) == 0){
@@ -129,7 +134,7 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
     }
   }
 
- else if(strncmp((char*)input, "SAVE?", 5U) == 0){
+  else if(strncmp((char*)input, "SAVE?", 5U) == 0){
     uint8_t len_out = 0;
 
     uint16_t buf[6] = {0};
@@ -145,9 +150,9 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
     sprintf((char*)serial_out, "ID: %i\nRED: %i\nGREEN: %i\nBLUE: %i\nLUM: %i\nRATE: %i\n\r",
                                 buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
     SendSerial(serial_out, len_out);
- }
+  }
 
- else if(strncmp((char*)input, "SAVE", 4U) == 0){
+  else if(strncmp((char*)input, "SAVE", 4U) == 0){
     uint8_t data[6] = {0};
 
     GetColorValues(data);
@@ -159,7 +164,7 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
     data[5] = (uint8_t)GetRateValue();
 
     setSavedData(EEPROMADDRESS, data);
- }
+  }
 
   else if(strncmp((char*)input, "ID?", 3U) == 0){
     uint8_t len_out = 0;
@@ -192,8 +197,8 @@ void SerialCommands(uint8_t* input, uint8_t in_len){
   }
 
   else{
-      sprintf((char*)serial_out, "Error: No Command\n\r");
-      SendSerial(serial_out, 19);
+    sprintf((char*)serial_out, "Error: No Command\n\r");
+    SendSerial(serial_out, 19);
   }
 }
 
@@ -202,19 +207,19 @@ uint16_t ParseNumber(uint8_t* input, uint8_t* i, uint8_t* error){
   uint8_t col = 0; // largest decimal place column number
 
   while(input[*i + col] != '\r' && input[*i + col] != '\n' && input[*i + col] != ',' && *i < 20){
-      col++;
+    col++;
   }
 
   uint16_t val = 0;
   while(col != 0){
 
-      if((uint8_t)(input[*i] - 0x30) > 9){
+    if((uint8_t)(input[*i] - 0x30) > 9){
 	  *error = 1;
-      }
+    }
 
-      val += (input[*i] - 0x30) * pow(10, col - 1);
-      *i += 1;
-      col--;
+    val += (input[*i] - 0x30) * pow(10, col - 1);
+    *i += 1;
+    col--;
   }
 
   return val;
@@ -224,29 +229,51 @@ uint16_t ParseNumber(uint8_t* input, uint8_t* i, uint8_t* error){
   *NumberLen
   */
 uint16_t NumberLen(uint16_t num){
-    uint16_t len = 0;
-    if(num >= 10000){
-        len += 5;
-    }
-    else if(num >= 1000){
-        len += 4;
-    }
-    else if(num >= 100){
-        len += 3;
-    }
-    else if(num >= 10){
-        len += 2;
-    }
-    else if(num < 10){
-        len += 1;
-    }
+  uint16_t len = 0;
+  if(num >= 10000){
+      len += 5;
+  }
+  else if(num >= 1000){
+      len += 4;
+  }
+  else if(num >= 100){
+      len += 3;
+  }
+  else if(num >= 10){
+      len += 2;
+  }
+  else if(num < 10){
+      len += 1;
+  }
 
-    return len;
+  return len;
 }
 
 void ValueError(void){
   sprintf((char*)serial_out, "Value Error\n\r");	//TODO: Stuttering Error message when error occurs after second comma
   SendSerial(serial_out, 13);
+}
+
+void EEPROMError(void){
+  uint16_t eepromStatusLogLen = getStatusLogLen();
+
+  for(eepromStatusLogLen; eepromStatusLogLen > 0; eepromStatusLogLen--){
+    if(eepromStatusLog[eepromStatusLogLen - 1] == HAL_BUSY){
+      sprintf((char*)serial_out, "EEPROM BUSY\n\r");
+      SendSerial(serial_out, 13);
+    }
+    else if(eepromStatusLog[eepromStatusLogLen - 1] == HAL_ERROR){
+      sprintf((char*)serial_out, "EEPROM ERROR\n\r");
+      SendSerial(serial_out, 14);
+    }
+    else{
+      sprintf((char*)serial_out, "EEPROM FAIL\n\r");
+      SendSerial(serial_out, 13);
+    }
+  }
+  
+  setStatusLogLen(0);
+
 }
 
 void ProcessSerial(uint8_t* Buf){

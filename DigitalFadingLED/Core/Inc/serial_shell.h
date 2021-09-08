@@ -19,6 +19,8 @@ uint16_t NumberLen(uint16_t num);
 
 void ValueError(void);
 
+void EEPROMError(void);
+
 void CheckCommand(void);
 
 

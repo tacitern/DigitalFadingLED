@@ -96,7 +96,6 @@ int main(void)
   MX_USART3_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-//  setSavedData();
 
   //Start uart rx interrupt
   HAL_UART_Receive_IT(&huart3, buf, len);

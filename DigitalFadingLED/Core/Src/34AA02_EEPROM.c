@@ -8,15 +8,19 @@
 
 #include "34AA02_EEPROM.h"
 
+static uint8_t eepromStatusLogLen = 0;
 
 uint8_t eepromRead(EEPROM_MemTypeDef address, uint8_t dev_address){
   uint16_t dev = (10 << 4) + (dev_address << 1);
   uint8_t data = 0;
+  
   HAL_StatusTypeDef status = HAL_I2C_Mem_Read(&hi2c1, dev, address, I2C_MEMADD_SIZE_8BIT, &data, 1U, HAL_MAX_DELAY);
-  if(status == HAL_OK){
-      return data;
+  
+  // Log eeprom issues
+  if(status != HAL_OK){
+    saveStatus(status);
   }
-  //TODO added other status return handling
+
   return data;
 }
 
@@ -26,15 +30,18 @@ HAL_StatusTypeDef eepromWrite(EEPROM_MemTypeDef address, uint8_t data, uint8_t d
   uint8_t buf[2] = {address, data};
 
   HAL_StatusTypeDef status = HAL_I2C_Master_Transmit(&hi2c1, dev, buf, 2, HAL_MAX_DELAY);
-  if(status == HAL_OK){
-      return status;
+
+  // Log eeprom issues
+  if(status != HAL_OK){
+    saveStatus(status);
   }
-  //TODO added other status return handling
+
   return status;
 }
 
 void readSavedData(uint16_t *buf, uint8_t dev_address){
   uint16_t data;
+
   //ID
   buf[0] = eepromRead(ID, dev_address);
   eepromReady(dev_address);
@@ -81,7 +88,22 @@ void eepromReady(uint8_t dev_address){
   }
 }
 
-void setDeviceId(uint8_t id){
+void saveStatus(HAL_StatusTypeDef status){
 
+  //if status log overflows move to beginning of status log
+  if(eepromStatusLogLen == 1024){
+    eepromStatusLogLen = 0;
+  }
+  
+  eepromStatusLog[eepromStatusLogLen];
+  eepromStatusLogLen++;
+}
+
+uint16_t getStatusLogLen(void){
+  return eepromStatusLogLen;
+}
+
+void setStatusLogLen(uint16_t len){
+  eepromStatusLogLen = len;
 }
 
