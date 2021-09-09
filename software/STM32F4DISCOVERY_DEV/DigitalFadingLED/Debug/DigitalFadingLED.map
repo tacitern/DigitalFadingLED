@@ -4961,11 +4961,16 @@ LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_macro   0x00000000000223a5      0x1e8 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
  .debug_macro   0x000000000002258d      0x1e9 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
+<<<<<<< HEAD:software/STM32F4DISCOVERY_DEV/DigitalFadingLED/Debug/DigitalFadingLED.map
 .debug_line     0x0000000000000000    0x13c99
+=======
+.debug_line     0x0000000000000000    0x13c9f
+>>>>>>> 7645359124509e89d096515e2bd953aec12c28ac:DigitalFadingLED/Debug/DigitalFadingLED.map
  .debug_line    0x0000000000000000      0x862 Core/Src/34AA02_EEPROM.o
  .debug_line    0x0000000000000862      0x7b7 Core/Src/gpio.o
  .debug_line    0x0000000000001019      0x761 Core/Src/i2c.o
  .debug_line    0x000000000000177a      0x805 Core/Src/main.o
+<<<<<<< HEAD:software/STM32F4DISCOVERY_DEV/DigitalFadingLED/Debug/DigitalFadingLED.map
  .debug_line    0x0000000000001f7f      0xd74 Core/Src/serial_shell.o
  .debug_line    0x0000000000002cf3      0x6f9 Core/Src/stm32f4xx_hal_msp.o
  .debug_line    0x00000000000033ec      0x7ea Core/Src/stm32f4xx_it.o
@@ -5026,6 +5031,68 @@ LOAD c:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_str     0x00000000000cd8fa      0x4ee Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
                                       0xc552a (size before relaxing)
  .debug_str     0x00000000000cdde8      0x5c6 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+=======
+ .debug_line    0x0000000000001f7f      0xd7a Core/Src/serial_shell.o
+ .debug_line    0x0000000000002cf9      0x6f9 Core/Src/stm32f4xx_hal_msp.o
+ .debug_line    0x00000000000033f2      0x7ea Core/Src/stm32f4xx_it.o
+ .debug_line    0x0000000000003bdc      0x4f8 Core/Src/sysmem.o
+ .debug_line    0x00000000000040d4      0x779 Core/Src/system_stm32f4xx.o
+ .debug_line    0x000000000000484d      0xa3d Core/Src/tim.o
+ .debug_line    0x000000000000528a      0x764 Core/Src/usart.o
+ .debug_line    0x00000000000059ee       0x88 Core/Startup/startup_stm32f407vgtx.o
+ .debug_line    0x0000000000005a76      0x9df Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_line    0x0000000000006455      0xc8e Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_line    0x00000000000070e3      0xf48 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_line    0x000000000000802b      0xb57 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_line    0x0000000000008b82     0x3966 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+ .debug_line    0x000000000000c4e8      0xd5b Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_line    0x000000000000d243     0x360b Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_line    0x000000000001084e     0x19ac Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_line    0x00000000000121fa     0x1aa5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+
+.debug_str      0x0000000000000000    0xce358
+ .debug_str     0x0000000000000000    0xc5156 Core/Src/34AA02_EEPROM.o
+                                      0xc5455 (size before relaxing)
+ .debug_str     0x00000000000c5156      0x1a8 Core/Src/gpio.o
+                                      0xc4fdb (size before relaxing)
+ .debug_str     0x00000000000c52fe       0x4b Core/Src/i2c.o
+                                      0xc54db (size before relaxing)
+ .debug_str     0x00000000000c5349      0x5e6 Core/Src/main.o
+                                      0xc5ae5 (size before relaxing)
+ .debug_str     0x00000000000c592f     0x493d Core/Src/serial_shell.o
+                                      0xca272 (size before relaxing)
+ .debug_str     0x00000000000ca26c       0x2c Core/Src/stm32f4xx_hal_msp.o
+                                      0xc4f3e (size before relaxing)
+ .debug_str     0x00000000000ca298       0xdf Core/Src/stm32f4xx_it.o
+                                      0xc5605 (size before relaxing)
+ .debug_str     0x00000000000ca377      0x4e9 Core/Src/sysmem.o
+                                       0x629d (size before relaxing)
+ .debug_str     0x00000000000ca860       0xaf Core/Src/system_stm32f4xx.o
+                                      0xc4a51 (size before relaxing)
+ .debug_str     0x00000000000ca90f      0x6e9 Core/Src/tim.o
+                                      0xc5bff (size before relaxing)
+ .debug_str     0x00000000000caff8       0x57 Core/Src/usart.o
+                                      0xc592e (size before relaxing)
+ .debug_str     0x00000000000cb04f       0x36 Core/Startup/startup_stm32f407vgtx.o
+                                         0x6e (size before relaxing)
+ .debug_str     0x00000000000cb085      0x57b Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+                                      0xc5533 (size before relaxing)
+ .debug_str     0x00000000000cb600      0x392 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                                      0xc5322 (size before relaxing)
+ .debug_str     0x00000000000cb992      0x31d Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+                                      0xc4e7b (size before relaxing)
+ .debug_str     0x00000000000cbcaf      0x15f Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+                                      0xc4bf8 (size before relaxing)
+ .debug_str     0x00000000000cbe0e      0xabd Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+                                      0xc59d3 (size before relaxing)
+ .debug_str     0x00000000000cc8cb      0x24e Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+                                      0xc4e53 (size before relaxing)
+ .debug_str     0x00000000000ccb19      0xd8b Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                                      0xc5d79 (size before relaxing)
+ .debug_str     0x00000000000cd8a4      0x4ee Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+                                      0xc552a (size before relaxing)
+ .debug_str     0x00000000000cdd92      0x5c6 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+>>>>>>> 7645359124509e89d096515e2bd953aec12c28ac:DigitalFadingLED/Debug/DigitalFadingLED.map
                                       0xc53b5 (size before relaxing)
 
 .comment        0x0000000000000000       0x53
