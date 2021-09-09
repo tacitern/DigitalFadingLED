@@ -96,7 +96,6 @@ int main(void)
   MX_USART3_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-//  setSavedData();
 
   //Start uart rx interrupt
   HAL_UART_Receive_IT(&huart3, buf, len);
@@ -114,7 +113,7 @@ int main(void)
 
   //Get Saved state from EEPROM
   uint16_t buf[6] = {0};
-  readSavedData(buf, 0);
+  readSavedData(buf, EEPROMADDRESS);
 
   //setID(buf[0])
   uint8_t startcolors[3] = {(uint8_t)buf[1], (uint8_t)buf[2], (uint8_t)buf[3]};
