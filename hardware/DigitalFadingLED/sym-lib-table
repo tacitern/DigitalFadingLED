@@ -1,0 +1,8 @@
+(sym_lib_table
+  (lib (name SI3590DV)(type Legacy)(uri ${KIPRJMOD}/footprints/SI3590DV_N-P_FET/SI3590DV.lib)(options "")(descr ""))
+  (lib (name DMN2004DMK)(type Legacy)(uri ${KIPRJMOD}/footprints/DMN2004DMK/DMN2004DMK.lib)(options "")(descr ""))
+  (lib (name BU33SD5WG-TR)(type Legacy)(uri ${KIPRJMOD}/footprints/BU33SD5WG-TR_3V3_REG/BU33SD5WG-TR.lib)(options "")(descr ""))
+  (lib (name 34AA02_EEPROM)(type Legacy)(uri ${KIPRJMOD}/footprints/34AA02_EEPROM/34AA02_EEPROM.lib)(options "")(descr ""))
+  (lib (name QS6K21)(type Legacy)(uri ${KIPRJMOD}/footprints/QS6K21_2-N-CH/QS6K21.lib)(options "")(descr ""))
+  (lib (name QS6M4)(type Legacy)(uri ${KIPRJMOD}/footprints/QS6M4_N-CH_P-CH/QS6M4.lib)(options "")(descr ""))
+)

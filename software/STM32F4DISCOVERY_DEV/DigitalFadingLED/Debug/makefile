@@ -61,8 +61,8 @@ all: main-build
 main-build: DigitalFadingLED.elf secondary-outputs
 
 # Tool invocations
-DigitalFadingLED.elf: $(OBJS) $(USER_OBJS) C:\Projects\git\DigitalFadingLED\software\STM32F4DISCOVERY\ DEV\DigitalFadingLED\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "DigitalFadingLED.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Projects\git\DigitalFadingLED\software\STM32F4DISCOVERY DEV\DigitalFadingLED\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DigitalFadingLED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+DigitalFadingLED.elf: $(OBJS) $(USER_OBJS) C:\Projects\git\DigitalFadingLED\software\STM32F4DISCOVERY_DEV\DigitalFadingLED\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "DigitalFadingLED.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Projects\git\DigitalFadingLED\software\STM32F4DISCOVERY_DEV\DigitalFadingLED\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DigitalFadingLED.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

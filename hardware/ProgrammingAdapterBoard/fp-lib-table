@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name 851-87-007-20-001101)(type KiCad)(uri ${KIPRJMOD}/footprints/Preci-Dip_851-87-007-20-001101_7pos_Soccket/851-87-007-20-001101.pretty)(options "")(descr ""))
+  (lib (name FTSH-107-01-L-DV-K-A)(type KiCad)(uri ${KIPRJMOD}/footprints/FTSH-107-01-L-DV-K-A_ProgrammingHeader/FTSH-107-01-L-DV-K-A.pretty)(options "")(descr ""))
+  (lib (name logo)(type KiCad)(uri ${KIPRJMOD}/footprints/logo/logo.pretty)(options "")(descr ""))
+)
