@@ -28,7 +28,7 @@
 void GetColorValues(uint8_t* colors){
 
   //Colors are between 0 and 255; PWM values are from 0 to 32000
-  //32000/255 = 125.49; timer values are scaled down and rounded
+  //32000/255 = 125.49; timer values are scaled down
   //to give an approximate 0-255 value
   colors[0] = (uint8_t)((float)htim3.Instance->CCR1/125.49f + 0.5f);
   colors[1] = (uint8_t)((float)htim3.Instance->CCR2/125.49f + 0.5f);
@@ -55,17 +55,18 @@ void SetColorValues(uint8_t* colors){
 uint16_t GetLuminanceValue(void){
   //expects a return between 0 and 1000 must be conditioned
   //lum in between 0 and 1000; PWM is between 0 and 3200
-  //3200/1000 = 3.2; lum values are scaled down and rounded
-  return (uint16_t)((float)htim2.Instance->CCR1/3.2f + 0.5f);
+  //3200/1000 = 3.2; lum values are scaled down
+  //lum flip must be accounted for
+  return (uint16_t)(1000 - ((float)htim2.Instance->CCR1/3.2f));
 }
 
 void SetLuminanceValue(uint16_t lum){
-  //lum = 1000 - lum; // Flip
   //lum cap
   if(lum > 1000){
     lum = 1000;
   }
-  htim2.Instance->CCR1 = (uint16_t)((float)lum*3.2f + 0.5f);
+  lum = 1000 - lum; // Flip
+  htim2.Instance->CCR1 = (uint16_t)((float)lum*3.2f);
 }
 
 uint16_t rate = 0;
@@ -81,6 +82,7 @@ uint8_t time_flag = 0;
 uint8_t dir = 0;
 void ProcessLuminance(void){
   if(time_flag){
+
     if(dir == 0){
       SetLuminanceValue(GetLuminanceValue() + rate);
     }
@@ -93,10 +95,10 @@ void ProcessLuminance(void){
         SetLuminanceValue(GetLuminanceValue() - rate);
       }
     }
-    if(dir == 0 && GetLuminanceValue() >= 1000){
+    if(dir == 0 && GetLuminanceValue() == 1000){
       dir = 1;
     }
-    else if(dir == 1 && GetLuminanceValue() < rate){
+    else if(dir == 1 && GetLuminanceValue() == 0){
       dir = 0;
     }
 
@@ -125,6 +127,7 @@ void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 0 */
 
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
 
@@ -137,6 +140,15 @@ void MX_TIM2_Init(void)
   htim2.Init.Period = 3200;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
   {
     Error_Handler();
@@ -169,6 +181,7 @@ void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 0 */
 
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
 
@@ -181,6 +194,15 @@ void MX_TIM3_Init(void)
   htim3.Init.Period = 32000;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
   {
     Error_Handler();
@@ -251,10 +273,10 @@ void MX_TIM7_Init(void)
 
 }
 
-void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
 {
 
-  if(tim_pwmHandle->Instance==TIM2)
+  if(tim_baseHandle->Instance==TIM2)
   {
   /* USER CODE BEGIN TIM2_MspInit 0 */
 
@@ -265,7 +287,7 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
 
   /* USER CODE END TIM2_MspInit 1 */
   }
-  else if(tim_pwmHandle->Instance==TIM3)
+  else if(tim_baseHandle->Instance==TIM3)
   {
   /* USER CODE BEGIN TIM3_MspInit 0 */
 
@@ -276,12 +298,7 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
 
   /* USER CODE END TIM3_MspInit 1 */
   }
-}
-
-void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
-{
-
-  if(tim_baseHandle->Instance==TIM7)
+  else if(tim_baseHandle->Instance==TIM7)
   {
   /* USER CODE BEGIN TIM7_MspInit 0 */
 
@@ -355,10 +372,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
 
 }
 
-void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
+void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 {
 
-  if(tim_pwmHandle->Instance==TIM2)
+  if(tim_baseHandle->Instance==TIM2)
   {
   /* USER CODE BEGIN TIM2_MspDeInit 0 */
 
@@ -369,7 +386,7 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 
   /* USER CODE END TIM2_MspDeInit 1 */
   }
-  else if(tim_pwmHandle->Instance==TIM3)
+  else if(tim_baseHandle->Instance==TIM3)
   {
   /* USER CODE BEGIN TIM3_MspDeInit 0 */
 
@@ -380,12 +397,7 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 
   /* USER CODE END TIM3_MspDeInit 1 */
   }
-}
-
-void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
-{
-
-  if(tim_baseHandle->Instance==TIM7)
+  else if(tim_baseHandle->Instance==TIM7)
   {
   /* USER CODE BEGIN TIM7_MspDeInit 0 */
 
