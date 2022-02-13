@@ -1,48 +1,35 @@
 /**
-  ******************************************************************************
-  * @file    tim.h
-  * @brief   This file contains all the function prototypes for
-  *          the tim.c file
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    tim.h
+ * @brief   This file contains all the function prototypes for
+ *          the tim.c file
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under BSD 3-Clause license,
+ * the "License"; You may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at:
+ *                        opensource.org/licenses/BSD-3-Clause
+ *
+ ******************************************************************************
+ */
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __TIM_H__
 #define __TIM_H__
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-void GetColorValues(uint8_t* colors);
 
-void SetColorValues(uint8_t* colors);
-
-uint16_t GetLuminanceValue(void);
-
-void SetLuminanceValue(uint16_t lum);
-
-uint16_t GetRateValue(void);
-
-void SetRateValue(uint16_t val);
-
-void ProcessLuminance(void);
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 /* USER CODE END Includes */
 
 extern TIM_HandleTypeDef htim2;
@@ -60,6 +47,21 @@ void MX_TIM7_Init(void);
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 /* USER CODE BEGIN Prototypes */
+void GetColorValues(uint8_t *colors);
+
+void SetColorValues(uint8_t *colors);
+
+uint16_t GetLuminanceValue(void);
+
+void SetLuminanceValue(uint16_t lum);
+
+uint16_t GetRateValue(void);
+
+void SetRateValue(uint16_t val);
+
+void ProcessLuminance(void);
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 
 /* USER CODE END Prototypes */
 

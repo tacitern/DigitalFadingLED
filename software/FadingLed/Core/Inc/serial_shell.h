@@ -12,14 +12,13 @@
  extern "C" {
 #endif
 
-
 #include "main.h"
 
 void SendSerial(uint8_t* buf, uint16_t len);
 
 void ProcessSerial(uint8_t* Buf);
 
-void SerialCommands(uint8_t* input, uint8_t in_len);
+void SerialCommands(uint8_t* input);
 
 uint16_t ParseNumber(uint8_t* input, uint8_t* i, uint8_t* error);
 
