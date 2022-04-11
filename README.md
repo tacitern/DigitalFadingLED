@@ -113,6 +113,6 @@ Returns the current ID number setting saved in the EEPROM.
 
 ### **Set ID**
 
-Sets the current ID number setting saved in the EEPROM.
+Sets the provided unsigned integer from 0 to 255 as an ID number to be saved in the EEPROM. 
 
-*Serial Command:* `"ID\n\r"`
+*Serial Command:* `"ID <ID Number>\n\r"`
