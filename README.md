@@ -1,9 +1,9 @@
 # DigitalFadingLED
 Microcontroller project which uses a usb virtual serial port to control the color of a RGB led, brightness and fade rate.
 
-<center>
+<p align="center">
 <img src="images/IMG_0929.jpg" alt="board image" width="400"/>
-</center>
+</p>
 
 ## Serial Commands
 
