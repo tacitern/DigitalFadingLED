@@ -1,8 +1,8 @@
 34AA02_EEPROM.c:21:9:eepromRead	56	static
 34AA02_EEPROM.c:45:19:eepromWrite	40	static
-34AA02_EEPROM.c:68:6:readSavedData	32	static
-34AA02_EEPROM.c:101:6:setSavedData	16	static
-34AA02_EEPROM.c:123:6:eepromReady	24	static
-34AA02_EEPROM.c:137:6:saveStatus	16	static
-34AA02_EEPROM.c:155:10:getStatusLogLen	8	static
-34AA02_EEPROM.c:165:6:setStatusLogLen	16	static
+34AA02_EEPROM.c:85:6:readSavedData	32	static
+34AA02_EEPROM.c:128:6:setSavedData	16	static
+34AA02_EEPROM.c:151:6:eepromReady	24	static
+34AA02_EEPROM.c:166:6:saveStatus	16	static
+34AA02_EEPROM.c:184:10:getStatusLogLen	8	static
+34AA02_EEPROM.c:194:6:setStatusLogLen	16	static

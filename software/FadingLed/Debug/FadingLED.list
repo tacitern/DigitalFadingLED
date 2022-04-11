@@ -6141,9 +6141,9 @@ HAL_StatusTypeDef eepromWrite(EEPROM_MemTypeDef address, uint8_t data, uint8_t d
  8003040:	20000708 	.word	0x20000708
 
 08003044 <readSavedData>:
- *
- * @param buf
- * @param dev_address
+ * buf[3]:  Blue Value
+ * buf[4]:  Luminance Value
+ * buf[5]:  Rate Value
  */
 void readSavedData(uint16_t *buf, uint8_t dev_address)
 {
@@ -6290,9 +6290,9 @@ void readSavedData(uint16_t *buf, uint8_t dev_address)
  8003148:	bd90      	pop	{r4, r7, pc}
 
 0800314a <setSavedData>:
- *
- * @param dev_address
- * @param data
+ * data[3]: 0x04 - Upper 2 bits of Luminance Value
+ * data[4]: 0x05 - Lower byte of Luminance data
+ * data[5]: 0x06 - Rate Value
  */
 void setSavedData(uint8_t dev_address, uint8_t *data)
 {
@@ -6381,9 +6381,9 @@ void setSavedData(uint8_t dev_address, uint8_t *data)
  80031ea:	bd80      	pop	{r7, pc}
 
 080031ec <eepromReady>:
- * @brief
+ * Polls status until the I2C device is ready for opperation
  *
- * @param dev_address
+ * @param dev_address I2C Device Address
  */
 void eepromReady(uint8_t dev_address)
 {
@@ -6433,9 +6433,9 @@ void eepromReady(uint8_t dev_address)
  8003238:	20000708 	.word	0x20000708
 
 0800323c <saveStatus>:
- * @brief
+ * communication errors
  *
- * @param status
+ * @param status Error status generated for the EEPROM Device
  */
 void saveStatus(HAL_StatusTypeDef status)
 {
@@ -6465,9 +6465,9 @@ void saveStatus(HAL_StatusTypeDef status)
  800325c:	20000094 	.word	0x20000094
 
 08003260 <getStatusLogLen>:
- * @brief Get the Status Log Len object
+ * @brief Get the Status Log Length value
  *
- * @return uint16_t
+ * @return uint16_t EEPROM status log length
  */
 uint16_t getStatusLogLen(void)
 {
@@ -6484,9 +6484,9 @@ uint16_t getStatusLogLen(void)
  8003270:	20000094 	.word	0x20000094
 
 08003274 <setStatusLogLen>:
- * @brief Set the Status Log Len object
+ * @brief Set the Status Log Length value
  *
- * @param len
+ * @param len Desired Status log length
  */
 void setStatusLogLen(uint16_t len)
 {
@@ -8878,9 +8878,9 @@ void SystemInit (void)
 	...
 
 080040a4 <GetColorValues>:
-/**
- * @brief This functions sets RGB as
- * @details
+ * @details Colors are between 0 and 255; PWM values are from 0 to 32000
+ * 32000/255 = 125.49; timer values are in increaments of ~126 to correspond
+ * with a 0 to 255 color value
  */
 void GetColorValues(uint8_t *colors)
 {
@@ -8889,9 +8889,7 @@ void GetColorValues(uint8_t *colors)
  80040a8:	af00      	add	r7, sp, #0
  80040aa:	6078      	str	r0, [r7, #4]
 
-  // Colors are between 0 and 255; PWM values are from 0 to 32000
-  // 32000/255 = 125.49; timer values are scaled down
-  // to give an approximate 0-255 value
+  // 
   colors[0] = (uint8_t)((float)htim3.Instance->CCR1 / 125.49f + 0.5f);
  80040ac:	4b29      	ldr	r3, [pc, #164]	; (8004154 <GetColorValues+0xb0>)
  80040ae:	681b      	ldr	r3, [r3, #0]
@@ -8972,9 +8970,9 @@ void GetColorValues(uint8_t *colors)
  8004158:	42fafae1 	.word	0x42fafae1
 
 0800415c <SetColorValues>:
- * @brief Set the Color Values object
+ * @brief Sets Color timers PWM settings for provided RGB color intensities
  *
- * @param colors
+ * @param colors Pointer to array of Desired RGB settings
  */
 void SetColorValues(uint8_t *colors)
 {
@@ -9102,9 +9100,9 @@ uint16_t GetLuminanceValue(void)
  8004250:	447a0000 	.word	0x447a0000
 
 08004254 <SetLuminanceValue>:
- * @brief Set the Luminance Value object
+ * @brief Set the Luminance Value
  *
- * @param lum
+ * @param lum Desired Luminance
  */
 void SetLuminanceValue(uint16_t lum)
 {
@@ -9163,9 +9161,9 @@ void SetLuminanceValue(uint16_t lum)
  80042b4:	20000798 	.word	0x20000798
 
 080042b8 <GetRateValue>:
- * @brief Get the Rate Value object
+ * @brief Returns the Rate Value
  *
- * @return uint16_t
+ * @return Current Rate setting
  */
 uint16_t GetRateValue(void)
 {
@@ -9182,9 +9180,9 @@ uint16_t GetRateValue(void)
  80042c8:	200002a0 	.word	0x200002a0
 
 080042cc <SetRateValue>:
- * @brief Set the Rate Value object
+ * @brief Set the Rate Value
  *
- * @param val
+ * @param val Desired rate setting
  */
 void SetRateValue(uint16_t val)
 {
@@ -9207,9 +9205,9 @@ void SetRateValue(uint16_t val)
  80042e8:	200002a0 	.word	0x200002a0
 
 080042ec <ProcessLuminance>:
-/**
- * @brief
- *
+ * @details Process luminance creates a ramp adjustment to 
+ * the luminance value, which flips direction when max luminance is
+ * met or exceeded
  */
 void ProcessLuminance(void)
 {
@@ -9319,9 +9317,9 @@ void ProcessLuminance(void)
  8004390:	200002a0 	.word	0x200002a0
 
 08004394 <HAL_TIM_PeriodElapsedCallback>:
- * @brief
+ * @brief Timer period complete callback routine
  *
- * @param htim
+ * @param htim Timer instance
  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
